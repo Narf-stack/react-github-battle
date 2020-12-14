@@ -1,9 +1,9 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import {FaUserFriends, FaFighterJet, FaTrophy } from 'react-icons/fa'
 
 
 function Instructions(){
-
   return (
     <div className='instructions-container'>
       <h1 className='center-text header-lg'>Instructions</h1>
@@ -27,16 +27,101 @@ function Instructions(){
   )
 }
 
+class PlayerInput extends React.Component{
+
+  constructor(props){
+    super(props)
+    this.state={
+      username:''
+    }
+
+    this.handleSubmit = this.handleSubmit.bind(this)
+    this.handleChange = this.handleChange.bind(this)
+  }
+
+  handleSubmit(event){
+    event.preventDefault()
+    // we dont want to have any of the normal browser's event to take place
+    this.props.onSubmit(this.state.username)
+  }
+
+  handleChange(event){
+    this.setState({
+      username: event.target.value
+    })
+  }
+
+  render(){
+    return(
+      <form className='column player' onSubmit={this.handleSubmit}>
+        <label htmlFor='username' className='player-label'>
+          {this.props.label}
+        </label>
+        <div className='row player-inputs'>
+          <input
+            type="text"
+            id='username'
+            className='input-light'
+            placeholder='github username'
+            autoComplete='off'
+            value={this.state.username}
+            onChange={this.handleChange}
+          />
+          <button
+            className='btn dark-btn'
+            type='submit'
+            disabled={!this.state.username}
+          > submit
+          </button>
+        </div>
+      </form>
+    )
+  }
+}
+
+PlayerInput.propTypes={
+  label: PropTypes.string.isRequired,
+  onSubmit: PropTypes.func.isRequired
+}
 
 export default class Battle extends React.Component {
 
+  constructor(props){
+    super(props)
+    this.state ={
+      playerOne: null,
+      playerTwo: null
+    }
+    this.handleSubmit = this.handleSubmit.bind(this)
+  }
+  handleSubmit(id, player){
+    this.setState({
+      [id]: player
+    })
+
+  }
   render(){
+    const { playerOne, playerTwo } = this.state
     return (
       <React.Fragment>
-        <Instructions />
+        <Instructions/>
+        <div className='players-container'>
+          <h1 className='center-text header-lg'>Players</h1>
+          <div className='row space-around'>
+          {playerOne === null && (
+            <PlayerInput
+              label="Player One!"
+              onSubmit={(player)=> this.handleSubmit('playerOne',player)} />
+            )}
 
+          {playerTwo === null && (
+            <PlayerInput
+              label="Player Two!"
+              onSubmit={(player)=> this.handleSubmit('playerTwo',player)} />
+            )}
+          </div>
+        </div>
       </React.Fragment>
     )
-
   }
 }
