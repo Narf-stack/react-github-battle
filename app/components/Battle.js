@@ -109,7 +109,7 @@ function PlayerPreview({username, onReset, label}){
   )
 }
 
-PlayerPreview.propTypes={
+PlayerPreview.propTypes = {
   label: PropTypes.string.isRequired,
   onReset: PropTypes.func.isRequired,
   username: PropTypes.string.isRequired
@@ -142,7 +142,15 @@ export default class Battle extends React.Component {
 
     if (battle===true ){
       return (
-        <Results playerOne={playerOne} playerTwo={playerTwo}/>
+        <Results
+          playerOne={playerOne}
+          playerTwo={playerTwo}
+          onReset={()=>this.setState({
+            playerOne: null,
+            playerTwo: null,
+            battle:false
+          })}
+        />
       )
     }
     return (
