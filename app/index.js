@@ -5,7 +5,7 @@ import Popular from './components/Popular'
 import Battle from './components/Battle'
 import {ThemeProvider} from './contexts/theme'
 import Nav from './components/Nav'
-
+import Results from './components/Results'
 import {
   BrowserRouter as Router,
   Route,
@@ -33,6 +33,7 @@ class App extends React.Component {
               <Nav/>
               <Route exact path='/' component={Popular} />
               <Route exact path='/battle' component={Battle} />
+              <Route exact path='/battle/results' component={Results} />
             </div>
           </div>
         </ThemeProvider>
