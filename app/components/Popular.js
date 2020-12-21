@@ -99,6 +99,10 @@ export default class Popular extends React.Component {
   componentDidMount(){
     this.updatedLanguage(this.state.selectedLanguage)
   }
+
+  // componentWillUnmount() {
+  //     this.updatedLanguage('All');
+  //   }
   updatedLanguage(selectedLanguage){
     this.setState({
       selectedLanguage: selectedLanguage,
